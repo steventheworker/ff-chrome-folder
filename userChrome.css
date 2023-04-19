@@ -1,0 +1,554 @@
+/* "expand" traffic button area (to reveal location bar reliably (w/ :hover)) */
+toolbar[id="TabsToolbar"] .titlebar-buttonbox {
+	padding-top: 3em;
+	padding-left: 0em;
+	margin-top: -2.6em;
+}
+/* fullscreen remove empty space */
+:root[inFullscreen] #navigator-toolbox-background {
+	height: 0;
+}
+/* sidebar window element */
+:root[inFullscreen] #sidebar {
+	/* undo extra padding in #webext-panels-browser */
+	margin-top: -1.6em;
+}
+/* sidebar window inner browser */
+#webext-panels-browser {
+	/* =same bg as sidebery settings */
+	background-color: #38383d !important;
+	padding-top: 1.6em;
+}
+/* (fix text collision) move sidebery panel title (if visible) to under/right of traffic button bar */
+:root[sessionrestored]:not([inFullscreen]) #sidebar-header {
+	/* margin-left: 3.5em; */
+	margin-top: 0.666em;
+}
+
+/*
+	add Compact Mode (animated collapse) (Hovertext-Css)
+	https://github.com/Graklinghunter/Hovertext-Css/blob/main/userChrome.css
+*/
+:root {
+	--sidebar-min-width: 120px;
+	--sidebar-visible-width: 250px;
+}
+#sidebar-box #sidebar-header {
+	overflow: hidden !important;
+	display: none !important;
+}
+/*Configure Collapsed size*/
+#sidebar-box {
+	position: relative !important;
+	min-width: var(--sidebar-min-width) !important;
+	max-width: var(--sidebar-min-width) !important;
+	transition: 0.1s ease 0.05s;
+	z-index: 1;
+}
+/*Configure Expanded size and animation*/
+#sidebar-box:hover :-moz-any(#sidebar, #sidebar-header) {
+	background-color: var(--toolbar-bgcolor) !important;
+	min-width: var(--sidebar-visible-width) !important;
+	max-width: var(--sidebar-visible-width) !important;
+	margin-right: calc(
+		(var(--sidebar-visible-width) - var(--sidebar-min-width)) * -1
+	) !important;
+	z-index: 1;
+	position: relative !important;
+	transition: 0.1s ease 0.05s;
+}
+
+/*
+	add padding (arcfox)
+	https://github.com/use-arcfox/arcfox/blob/main/theme/userChrome.css
+*/
+#browser {
+	border: 7px solid #3b3f52 !important;
+	browser-radius: 15px;
+	box-sizing: border-box;
+	background: #3b3f52;
+}
+@-moz-document url("chrome://global/content/pictureinpicture/player.xhtml")
+{
+	#browser {
+		border: inherit !important;
+	}
+}
+:root[inFullscreen] > body > #browser {
+	browser-radius: inherit !important;
+	border: none !important;
+}
+#appcontent {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	overflow: hidden;
+}
+#titlebar {
+	-moz-appearance: none !important;
+	height: 20px !important;
+	margin-top: -5px !important;
+	margin-left: -5px !important;
+	margin-right: -5px !important;
+	background-color: transparent !important;
+	position: fixed !important;
+	width: calc(100% + 10px) !important;
+	z-index: 9999 !important;
+	-webkit-app-region: drag !important;
+}
+
+/*
+	https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/autohide_main_toolbar.css
+*/
+/* This style hides the main toolbar and shows it when the cursor is over the tabs toolbar as well as whenever the focus is inside nav-bar, such as when urlbar is focused. */
+:root {
+	--uc-navbar-transform: -40px;
+}
+:root[uidensity="compact"] {
+	--uc-navbar-transform: -34px;
+}
+
+#navigator-toolbox > div {
+	display: contents;
+}
+:root[sessionrestored]
+	:where(
+		#nav-bar,
+		#PersonalToolbar,
+		#tab-notification-deck,
+		.global-notificationbox
+	) {
+	transform: translateY(var(--uc-navbar-transform));
+}
+:root:is([customizing], [chromehidden*="toolbar"])
+	:where(
+		#nav-bar,
+		#PersonalToolbar,
+		#tab-notification-deck,
+		.global-notificationbox
+	) {
+	transform: none !important;
+	opacity: 1 !important;
+}
+
+#nav-bar:not([customizing]) {
+	opacity: 0;
+	transition: transform 400ms ease 1.8s, opacity 400ms ease 1.8s !important;
+	position: relative;
+	z-index: 2;
+}
+#TabsToolbar {
+	position: relative;
+	z-index: 3;
+}
+
+/* Show when toolbox is focused, like when urlbar has received focus */
+#navigator-toolbox:focus-within > .browser-toolbar {
+	transform: translateY(0);
+	opacity: 1;
+	transition-duration: 500ms, 200ms !important;
+	transition-delay: 0s !important;
+}
+/* Show when toolbox is hovered */
+#titlebar:hover ~ .browser-toolbar,
+#nav-bar:hover,
+#nav-bar:hover + #PersonalToolbar {
+	transform: translateY(0);
+	opacity: 1;
+	transition-duration: 500ms, 200ms !important;
+	transition-delay: 0s !important;
+}
+
+/* Bookmarks toolbar needs so extra rules */
+#PersonalToolbar {
+	transition: transform 400ms ease 1.8s !important;
+	position: relative;
+	z-index: 1;
+}
+
+/* Move up the content view */
+:root[sessionrestored]:not([inFullscreen]) > body > #browser {
+	margin-top: var(--uc-navbar-transform);
+}
+
+/*
+	https://github.com/ranmaru22/firefox-vertical-tabs
+*/
+:root {
+	/* delay before expanding tabs, set to '0' for no delay */
+	--delay: 0.5s;
+	--transition-time: 0.2s;
+	--positionX1: 48px; /* '48px' for left, '0px' for right sidebar */
+	--positionX2: absolute; /* 'absolute' for left, 'none' for right sidebar */
+	/* width of the collapsed sidebar in fullscreen mode ('1px' or '48px') */
+	--fullscreen-sidebar-width: 1px;
+}
+
+/* macOS specific styles */
+@media (-moz-platform: macos) {
+	#TabsToolbar:not([customizing="true"]) {
+		visibility: collapse !important;
+	}
+
+	:root:not([customizing="true"]) #nav-bar:not([inFullscreen]) {
+		padding-left: 80px;
+	}
+
+	:root:not([customizing="true"]) #TabsToolbar .titlebar-buttonbox-container {
+		visibility: visible !important;
+		position: absolute;
+		top: 12px;
+		left: 0px;
+		display: block;
+	}
+}
+
+/* Linux/GTK specific styles */
+@media (-moz-gtk-csd-available) {
+	#TabsToolbar:not([customizing="true"]) {
+		visibility: collapse !important;
+	}
+
+	#toolbar-menubar {
+		padding-top: 0px !important;
+	}
+
+	:root:not([customizing="true"])
+		#toolbar-menubar[inactive]
+		+ #TabsToolbar
+		.titlebar-buttonbox-container {
+		visibility: visible !important;
+		position: absolute;
+		top: var(--uc-win-ctrl-vertical-offset);
+		display: block;
+		z-index: 101;
+	}
+
+	/* enable rounded top corners */
+	:root[tabsintitlebar][sizemode="normal"]:not([gtktiledwindow="true"]):not(
+			[customizing="true"]
+		)
+		#nav-bar {
+		border-top-left-radius: env(-moz-gtk-csd-titlebar-radius);
+		border-top-right-radius: env(-moz-gtk-csd-titlebar-radius);
+	}
+
+	/* window control padding values (these don't change the size of the actual buttons, only the padding for the navbar) */
+	:root[tabsintitlebar]:not([customizing="true"]) {
+		/* default button/padding size based on adw-gtk3 theme */
+		--uc-win-ctrl-btn-width: 38px;
+		--uc-win-ctrl-padding: 12px;
+		/* vertical offset from the top of the window, calculation: (1/2 * (NAVBAR_HEIGHT - BUTTON_HEIGHT)) */
+		--uc-win-ctrl-vertical-offset: 8px;
+		/* extra window drag space */
+		--uc-win-ctrl-drag-space: 20px;
+	}
+
+	:root[tabsintitlebar][lwtheme]:not([customizing="true"]) {
+		/* seperate values for when using a theme, based on the Firefox defaults */
+		--uc-win-ctrl-btn-width: 30px;
+		--uc-win-ctrl-padding: 12px;
+		/* vertical offset from the top of the window, calculation: (1/2 * (NAVBAR_HEIGHT - BUTTON_HEIGHT)) */
+		--uc-win-ctrl-vertical-offset: 5px;
+		/* extra window drag space */
+		--uc-win-ctrl-drag-space: 20px;
+	}
+
+	/* setting the padding value for all button combinations */
+	@media (-moz-gtk-csd-minimize-button),
+		(-moz-gtk-csd-maximize-button),
+		(-moz-gtk-csd-close-button) {
+		#nav-bar {
+			--uc-navbar-padding: calc(var(--uc-win-ctrl-btn-width) * 1);
+		}
+	}
+
+	@media (-moz-gtk-csd-minimize-button) and (-moz-gtk-csd-maximize-button),
+		(-moz-gtk-csd-minimize-button) and (-moz-gtk-csd-close-button),
+		(-moz-gtk-csd-maximize-button) and (-moz-gtk-csd-close-button) {
+		#nav-bar {
+			--uc-navbar-padding: calc(var(--uc-win-ctrl-btn-width) * 2);
+		}
+	}
+
+	@media (-moz-gtk-csd-minimize-button) and (-moz-gtk-csd-maximize-button) and (-moz-gtk-csd-close-button) {
+		#nav-bar {
+			--uc-navbar-padding: calc(var(--uc-win-ctrl-btn-width) * 3);
+		}
+	}
+
+	/* only applies padding/positioning if there is 1 or more buttons */
+	@media (-moz-gtk-csd-minimize-button),
+		(-moz-gtk-csd-maximize-button),
+		(-moz-gtk-csd-close-button) {
+		/* window controls on the right */
+		@media not (-moz-gtk-csd-reversed-placement) {
+			#nav-bar {
+				padding-inline: 0
+					calc(
+						var(--uc-navbar-padding, 0) + var(--uc-win-ctrl-padding) +
+							var(--uc-win-ctrl-drag-space)
+					) !important;
+			}
+
+			.titlebar-buttonbox-container {
+				right: 0;
+			}
+		}
+
+		/* window controls on the left */
+		@media (-moz-gtk-csd-reversed-placement) {
+			#nav-bar {
+				padding-inline: calc(
+						var(--uc-navbar-padding, 0) + var(--uc-win-ctrl-padding) +
+							var(--uc-win-ctrl-drag-space)
+					)
+					0 !important;
+			}
+
+			.titlebar-buttonbox-container {
+				left: 0;
+			}
+		}
+	}
+
+	/* Hide window buttons in fullscreen */
+	#navigator-toolbox[style*="margin-top: -"] .titlebar-buttonbox-container,
+	[inDOMFullscreen="true"] .titlebar-buttonbox-container {
+		transform: translateY(-100px);
+	}
+}
+
+/* Windows specific styles */
+@media (-moz-platform: windows-win10) {
+	/* Hide main tabs toolbar */
+	:root[tabsintitlebar] {
+		--uc-window-control-width: 137px; /* Space at the right of nav-bar for window controls */
+		/* --uc-window-drag-space-width: 24px; */ /* To add extra window drag space in nav-bar */
+	}
+
+	#nav-bar {
+		border-inline: var(--uc-window-drag-space-width, 80px) solid
+			var(--toolbar-bgcolor);
+		border-inline-style: solid !important;
+		border-right-width: calc(
+			var(--uc-window-control-width, 0px) +
+				var(--uc-window-drag-space-width, 0px)
+		);
+
+		padding-top: 0.5px !important; /* This makes it possible to drag the maximized window. */
+		margin-left: -80px; /* Removes the space left when hiding .titlebar-buttonbox-container */
+	}
+
+	#back-button {
+		margin-top: -0.5px !important;
+	}
+
+	#forward-button {
+		margin-top: -0.5px !important;
+	}
+
+	#reload-button {
+		margin-top: -0.5px !important;
+	}
+
+	#PanelUI-button {
+		margin-top: -0.5px !important;
+	}
+
+	#nav-bar-overflow-button {
+		margin-top: -0.5px !important;
+	}
+
+	:root {
+		--uc-toolbar-height: 32px;
+		--chrome-content-separator-color: none !important;
+	}
+
+	:root:not([uidensity="compact"]) {
+		--uc-toolbar-height: 38px;
+	}
+
+	#TabsToolbar {
+		visibility: collapse !important;
+	}
+
+	/* Hide the Windows controls on the left side. */
+	#TabsToolbar .titlebar-buttonbox-container {
+		visibility: hidden !important;
+	}
+	/* Line up the Windows controls with the rest of the icons in the toolbar. */
+	.titlebar-buttonbox-container {
+		margin-top: 3px;
+	}
+
+	:root:not([inFullscreen]) #nav-bar {
+		margin-top: calc(0px - var(--uc-toolbar-height));
+		z-index: 2;
+	}
+
+	#toolbar-menubar {
+		min-height: unset !important;
+		height: var(--uc-toolbar-height) !important;
+		position: relative;
+	}
+
+	/* For a rounded button design, uncomment both lines in .titlebar-buttonbox. */
+	.titlebar-buttonbox {
+		z-index: 3 !important;
+		/* padding-right:3px; */
+	}
+
+	.titlebar-buttonbox * {
+		/* border-radius: 5px; */
+		width: 35px;
+		height: 38px;
+	}
+
+	#main-menubar {
+		-moz-box-flex: 1;
+		background-color: var(--toolbar-bgcolor, --toolbar-non-lwt-bgcolor);
+		background-clip: padding-box;
+		border-right: 30px solid transparent;
+		border-image: linear-gradient(
+				to left,
+				transparent,
+				var(--toolbar-bgcolor, --toolbar-non-lwt-bgcolor) 30px
+			)
+			20 / 30px;
+	}
+
+	#toolbar-menubar:not([inactive]) {
+		z-index: 2;
+	}
+
+	#toolbar-menubar[inactive] > #menubar-items {
+		opacity: 0;
+		pointer-events: none;
+		margin-left: var(--uc-window-drag-space-width, 0px);
+	}
+
+	:root[inFullscreen] #nav-bar {
+		border-right: none !important;
+	}
+}
+
+/* General styles */
+#browser {
+	position: relative;
+}
+
+#nav-bar,
+#urlbar {
+	z-index: 100;
+}
+
+#sidebar-box:not([lwt-sidebar]) {
+	appearance: unset !important;
+}
+
+#sidebar-box[sidebarcommand*="tabcenter"] {
+	z-index: 1;
+}
+
+#sidebar-box[sidebarcommand*="tabcenter"] #sidebar-header {
+	visibility: collapse;
+	display: none;
+}
+
+[sidebarcommand*="tabcenter"] #sidebar,
+#sidebar-box[sidebarcommand*="tabcenter"] {
+	min-width: 48px !important;
+	max-width: 48px !important;
+	width: 48px;
+}
+
+#sidebar-box[sidebarcommand*="tabcenter"]:not([hidden]) {
+	display: block;
+	position: var(--positionX2);
+	min-width: 48px;
+	max-width: 48px;
+	overflow: hidden;
+	border-right: 1px solid var(--sidebar-border-color);
+	z-index: 1;
+	top: 0;
+	bottom: 0;
+}
+
+/* use :where() selector to lower specificity */
+:where(#main-window[inFullscreen])
+	#sidebar-box[sidebarcommand*="tabcenter"]:not([hidden]) {
+	min-width: var(--fullscreen-sidebar-width) !important;
+	max-width: var(--fullscreen-sidebar-width) !important;
+}
+
+#sidebar-box[sidebarcommand*="tabcenter"]:hover #sidebar,
+#sidebar-box[sidebarcommand*="tabcenter"]:hover {
+	min-width: 10vw !important;
+	width: 30vw !important;
+	max-width: 200px !important;
+	z-index: 1 !important;
+	transition: all var(--transition-time) ease var(--delay);
+}
+
+/* used for delay function */
+#sidebar-box[sidebarcommand*="tabcenter"]:not(:hover) #sidebar,
+#sidebar-box[sidebarcommand*="tabcenter"]:not(:hover) {
+	transition: all var(--transition-time) ease 0s;
+}
+
+@media (width >= 1200px) {
+	#sidebar-box[sidebarcommand*="tabcenter"]:hover #sidebar,
+	#sidebar-box[sidebarcommand*="tabcenter"]:hover {
+		max-width: 250px !important;
+	}
+}
+
+[sidebarcommand*="tabcenter"] ~ #sidebar-splitter {
+	display: none;
+}
+
+[sidebarcommand*="tabcenter"] #sidebar {
+	max-height: 100%;
+	height: 100%;
+}
+
+#main-window:not([inFullscreen])
+	#sidebar-box[sidebarcommand*="tabcenter"]:not([hidden])
+	~ #appcontent {
+	margin-left: var(--positionX1);
+}
+
+#main-window[inFullscreen]:not([inDOMFullscreen])
+	#sidebar-box[sidebarcommand*="tabcenter"]:not([hidden])
+	~ #appcontent {
+	margin-left: var(--fullscreen-sidebar-width);
+}
+
+#main-window[inFullscreen] #sidebar {
+	height: 100vh;
+}
+
+[sidebarcommand*="tabcenter"] #sidebar-header {
+	background: #0c0c0d;
+	border-bottom: none !important;
+}
+
+[sidebarcommand*="tabcenter"] ~ #sidebar-splitter {
+	border-right-color: #0c0c0d !important;
+	border-left-color: #0c0c0d !important;
+}
+
+[sidebarcommand*="tabcenter"] #sidebar-switcher-target,
+[sidebarcommand*="tabcenter"] #sidebar-close {
+	filter: invert(100%);
+}
+
+@media (max-width: 630px) {
+	#urlbar-container {
+		min-width: 100% !important;
+	}
+
+	#menubar-items {
+		display: none !important;
+	}
+}
