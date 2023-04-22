@@ -1,29 +1,73 @@
-/* "expand" traffic button area (to reveal location bar reliably (w/ :hover)) */
-toolbar[id="TabsToolbar"] .titlebar-buttonbox {
-	padding-top: 3em;
-	padding-left: 0em;
-	margin-top: -2.6em;
-}
 /* fullscreen remove empty space */
 :root[inFullscreen] #navigator-toolbox-background {
 	height: 0;
 }
-/* sidebar window element */
-:root[inFullscreen] #sidebar {
-	/* undo extra padding in #webext-panels-browser */
-	margin-top: -1.6em;
+/* "expand" traffic button area (to reveal location bar reliably (w/ :hover)) */
+:root[sessionrestored]:not([inFullscreen])
+	toolbar[id="TabsToolbar"]
+	.titlebar-buttonbox {
+	padding-top: 3em;
+	padding-left: 0em;
+	margin-top: -2.6em;
 }
+
 /* sidebar window inner browser */
 #webext-panels-browser {
 	/* =same bg as sidebery settings */
 	background-color: #38383d !important;
-	padding-top: 1.6em;
+	/* padding-top: 1.6em; */
+}
+/* sidebar window element */
+:root[inFullscreen] #sidebar {
+	/* undo extra padding in #webext-panels-browser */
+	/* margin-top: -1.6em; */
+}
+
+#sidebar-header:hover {
+	overflow: inherit !important;
+}
+:root[inFullscreen] #sidebar-header {
+	margin-top: -0.9em;
 }
 /* (fix text collision) move sidebery panel title (if visible) to under/right of traffic button bar */
 :root[sessionrestored]:not([inFullscreen]) #sidebar-header {
 	/* margin-left: 3.5em; */
-	margin-top: 0.666em;
+	/* margin-left: -2.3em; */
+	/* margin-top: 0.666em; */
 }
+#sidebar-header {
+	/* margin-bottom: -0.4em; */
+	/* margin-top: 0.3em; */
+	padding: 0 !important;
+}
+#sidebar-switcher-target,
+#sidebar-switcher-target label {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+#sidebar-switcher-target image {
+	display: none;
+}
+#sidebar-close:hover {
+	background-color: red !important;
+}
+
+/* shift bookmarks (not in fullscreen) */
+:root[sessionrestored]:not([inFullscreen]) #PersonalToolbar[collapsed="false"] {
+	margin-left: 5.5em;
+}
+:root[sessionrestored]:not([inFullscreen])
+	#navigator-toolbox-background
+	#titlebar:hover
+	~ #PersonalToolbar,
+:root[sessionrestored]:not([inFullscreen]) #PersonalToolbar:hover,
+:root[sessionrestored]:not([inFullscreen]) #nav-bar:hover ~ #PersonalToolbar {
+	margin-left: 120px !important;
+}
+/* always hide Bookmarks panel, since I couldn't figure out how to change #X margin-top, because it's not a child of #PersonalToolbar */
+/* #PersonalToolbar[collapsed="false"] {
+	display: none;
+} */
 
 /*
 	add Compact Mode (animated collapse) (Hovertext-Css)
@@ -35,7 +79,7 @@ toolbar[id="TabsToolbar"] .titlebar-buttonbox {
 }
 #sidebar-box #sidebar-header {
 	overflow: hidden !important;
-	display: none !important;
+	/* display: none !important; */
 }
 /*Configure Collapsed size*/
 #sidebar-box {
@@ -47,7 +91,9 @@ toolbar[id="TabsToolbar"] .titlebar-buttonbox {
 }
 /*Configure Expanded size and animation*/
 #sidebar-box:hover :-moz-any(#sidebar, #sidebar-header) {
-	background-color: var(--toolbar-bgcolor) !important;
+	/* background-color: var(--toolbar-bgcolor) !important; */
+	background: black !important;
+	background-color: black !important;
 	min-width: var(--sidebar-visible-width) !important;
 	max-width: var(--sidebar-visible-width) !important;
 	margin-right: calc(
