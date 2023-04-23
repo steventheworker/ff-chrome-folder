@@ -27,27 +27,33 @@
 	/* margin-top: -1.6em; */
 }
 
-#sidebar-header:hover {
-	overflow: inherit !important;
+/* (fix text collision) move sidebery panel title (if visible) to under/right of traffic button bar */
+:root[sessionrestored]:not([inFullscreen]) #sidebar-header {
+	margin-top: -1.2em;
 }
 :root[inFullscreen] #sidebar-header {
 	margin-top: -0.9em;
 }
-/* (fix text collision) move sidebery panel title (if visible) to under/right of traffic button bar */
-:root[sessionrestored]:not([inFullscreen]) #sidebar-header {
-	/* margin-left: 3.5em; */
-	/* margin-left: -2.3em; */
-	/* margin-top: 0.666em; */
-}
 #sidebar-header {
-	/* margin-bottom: -0.4em; */
-	/* margin-top: 0.3em; */
 	padding: 0 !important;
+	border-bottom: 4px solid var(--sidebar-border-color) !important;
+	border-top: 4px solid var(--sidebar-border-color) !important;
+	outline: 2px solid var(--sidebar-border-color);
+	/* margin-bottom: 2px !important; */
+}
+#sidebar-header:hover {
+	overflow: inherit !important;
+}
+#sidebar-switcher-target,
+#sidebar-close {
+	margin-top: 1.2em !important;
+	z-index: 1;
 }
 #sidebar-switcher-target,
 #sidebar-switcher-target label {
 	padding-left: 0 !important;
 	padding-right: 0 !important;
+	z-index: 1;
 }
 #sidebar-switcher-target image {
 	display: none;
@@ -68,6 +74,24 @@
 :root[sessionrestored]:not([inFullscreen]) #nav-bar:hover ~ #PersonalToolbar {
 	margin-left: 120px !important;
 }
+
+/* cover glitchy black area (happens on sidebar hover (with snippet removed))  --by disguising a spacer as a background div & z-index'ing (close button + panel label) on top*/
+#sidebar-spacer {
+	position: absolute;
+	width: 100%;
+	height: 44px;
+	top: -15px;
+	background: #38383d;
+}
+#sidebar-box:hover #sidebar-spacer {
+	height: 60px;
+}
+#sidebar-box:hover #sidebar-header {
+	/* border-left: 2px solid #1a1a1a; */
+	/* padding-left: 2px !important; */
+	outline: 4px solid #1a1a1a;
+}
+
 /* always hide Bookmarks panel, since I couldn't figure out how to change #X margin-top, because it's not a child of #PersonalToolbar */
 /* #PersonalToolbar[collapsed="false"] {
 	display: none;
