@@ -86,10 +86,16 @@
 #sidebar-box:hover #sidebar-spacer {
 	height: 60px;
 }
+#sidebar-box:hover #sidebar {
+	outline: 4px solid #1a1a1a;
+	margin-left: -2px;
+}
 #sidebar-box:hover #sidebar-header {
 	/* border-left: 2px solid #1a1a1a; */
 	/* padding-left: 2px !important; */
 	outline: 4px solid #1a1a1a;
+	border-left: 2px solid #1a1a1a;
+	margin-left: -2px;
 }
 
 /* always hide Bookmarks panel, since I couldn't figure out how to change #X margin-top, because it's not a child of #PersonalToolbar */
