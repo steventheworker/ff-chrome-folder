@@ -10,6 +10,10 @@
 	padding-left: 0em;
 	margin-top: -2.6em;
 }
+:root[inFullscreen] #nav-bar:not([urlbar-exceeds-toolbar-bounds]),
+:root[inFullscreen] toolbar[overflowable][customizing] > .customization-target {
+	overflow: inherit !important;
+}
 
 /* sidebar window inner browser */
 #webext-panels-browser {
