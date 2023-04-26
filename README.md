@@ -18,7 +18,8 @@
 
 <details>
 <summary>my changes (topmost) + 4 different snippets copypasta'd</summary>
-
+-  re-add panel title, but without "sidebar icon"
+-   (fullscreen) undo clipping of location/toolbar 
 -   "expand" traffic button area (to reveal location bar reliably (w/ :hover))
 -   (fullscreen) remove empty space
 -   (fullscreen) sidebar window element - undo extra padding in #webext-panels-browser
