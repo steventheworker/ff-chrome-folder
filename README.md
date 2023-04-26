@@ -18,13 +18,17 @@
 
 <details>
 <summary>my changes (topmost) + 4 different snippets copypasta'd</summary>
--  re-add panel title, but without "sidebar icon"
--   (fullscreen) undo clipping of location/toolbar 
+
+-   re-add panel title, but without "sidebar icon"
+-   (fullscreen) undo clipping of location/toolbar
 -   "expand" traffic button area (to reveal location bar reliably (w/ :hover))
 -   (fullscreen) remove empty space
 -   (fullscreen) sidebar window element - undo extra padding in #webext-panels-browser
 -   sidebar window inner browser = set same bg as sidebery settings
 -   (fix text collision) move sidebery panel title (if visible) to under/right of traffic button bar
+
+#
+
 </details>
 
 -   add sidebar Compact Mode (animated collapse)
