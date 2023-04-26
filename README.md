@@ -58,7 +58,7 @@
 Firefox-specific screenhook features
 
 -   left-edge of window = sidebar peak
--   top-edge of window = more consistent window - dragging (compensate for userChrome.css w/ auto-reveal location bar (prevents drag))
--   cmd+shift+T to reopen tabs AND windows (requires BTT bindings)
+-   top-edge of window = more consistent window dragging (compensates for userChrome.css w/ auto-reveal location bar (preventing drags)) &nbsp; --++works w/ Rectangle snapping
+-   cmd+shift+T to reopen tabs AND windows (<u>**Note:**</u> requires BTT bindings (steviaOS keeps track of the order tabs/windows were closed in))
 
 </details>
