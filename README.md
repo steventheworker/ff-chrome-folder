@@ -2,8 +2,6 @@
 
 ## Install my chrome folder mods
 
-#
-
 1. Enable Profile Customizations - in about:config @ `toolkit.legacyUserProfileCustomizations.stylesheets`
 
 1. Now, in about:support, click on the ‘Open Directory’ and then create a folder named ‘chrome’ inside (if it doesn't exist).
