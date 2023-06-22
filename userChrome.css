@@ -1,3 +1,8 @@
+/* undo sidebar margins in fullscreen */
+:root[inFullscreen] #sidebar-box {
+	margin-left: 0 !important;
+	height: 100% !important;
+}
 /* fullscreen remove empty space */
 :root[inFullscreen] #navigator-toolbox-background {
 	height: 0;
